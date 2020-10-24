@@ -80,6 +80,7 @@ export const isBoolean:(obj:unknown) => boolean = (obj) => {
     return res;
 };
 
+
 export const typeValidate:(obj:unknown,type:keyof typeof typeEnum,constant?:string)=>boolean = (obj,type,constant=`The value of target`) =>{
     let res:boolean;
     if(Object.prototype.toString.call(obj)=== typeEnum[type]){

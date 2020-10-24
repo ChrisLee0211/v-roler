@@ -73,9 +73,6 @@ var ins:RoleInstanceClass | null= null;
  */
 class RoleCtr implements RoleInstanceClass {
     public ins:RoleInstanceClass | null = null;
-    constructor(){
-
-    }
 
     init(roles:string[]){
         if(this.ins===null){
