@@ -1,4 +1,6 @@
-import {isArray,typeValidate} from "../utils"
+import {Ref, ref} from "vue";
+import {isArray,typeValidate} from "../utils";
+import {useRoler} from "./hook";
 
 /**
  * 构造一个控制角色列表的类，用于实现对权限的存放更新与判断操作
@@ -9,7 +11,7 @@ export interface RoleInstanceClass {
     /**
      * 获取当前已初始化的角色列表
      */
-    getRoles():string[],
+    getRoles():Ref<string[]>,
     /**
      * 初始化操作
      * @param roles 角色数组
@@ -28,7 +30,8 @@ export interface RoleInstanceClass {
 }
 
 class RoleInstance implements RoleInstanceClass {
-    private roles:string[] = [];
+    private roles:Ref<string[]> = [] as any;
+    private reset:(roles:string[])=>void = ()=>{};
 
     constructor(list:string[]){
         this.init(list)
@@ -40,25 +43,25 @@ class RoleInstance implements RoleInstanceClass {
             if(isString===false){
                 throw new Error(`the item in roles array expect type 'String'!`)
             }else{
-                this.roles = [...param]
+               [this.roles,this.reset] = useRoler(param)
             }
         }else{
             throw new Error(`please use a array as roles init option`)
         }
     }
 
-    getRoles():string[]{
-        return [...this.roles]
+    getRoles():Ref<string[]>{
+        return this.roles
     }
 
     update(param:string[]){
-        this.init(param)
+        this.reset(param)
     }
 
     match(role:string):boolean {
         let isString: boolean = typeValidate(role,"string","the validate target");
         if(!isString) return false
-        let result = this.roles.includes(role)
+        let result = this.roles.value.includes(role)
         return result
     }
 }
@@ -80,8 +83,8 @@ class RoleCtr implements RoleInstanceClass {
         }
     }
 
-    getRoles():string[]{
-        return ins?.getRoles()??[]
+    getRoles():Ref<string[]>{
+        return ins?.getRoles()??ref([])
     }
 
     update(roles:string[]){
