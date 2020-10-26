@@ -1,12 +1,9 @@
 import {App, Plugin} from "vue";
-import RoleCtr from "./core/instance";
+import init from "./core/init";
 import {fnDirective} from "./core/diretive";
 
 var Vue:App;
-interface PluginOpt {
-    roles:string[],
-    command?:string
-}
+
 
 /**
  * v-role初始化安装逻辑
@@ -17,12 +14,10 @@ interface PluginOpt {
  */
 export const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
     if(Vue&&Vue === app){
-        console.error(`[v-roler] already installed. app.use(vRoler) should be called only once`);
+        console.error(`[v-roler] already installed. app.use(vRoler) should be called only once in each app`);
         return
     }else{
-        Vue = app;
-        
-        RoleCtr.init(opts.roles);
+        Vue = init(app,opts);
         let command = opts.command??'can';
         app.directive(`${command}`,fnDirective)
     }
