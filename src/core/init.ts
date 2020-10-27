@@ -1,8 +1,9 @@
 import { App } from "vue";
 import RoleCtr from "./instance";
 import {initMixin} from "./mixin";
-
+import {initDirective} from "./directive";
 import {rolerView} from "../components/rolerView";
+import { PluginOpt } from "src/types/global";
 
 /**
  * 初始化权限路由管理器及其工具
@@ -14,6 +15,7 @@ import {rolerView} from "../components/rolerView";
 export default function initVRoler(app:App,opts:PluginOpt):App {
     RoleCtr.init(opts.roles);
     initMixin(app);
+    initDirective(app,opts);
     registerComponent(app);
     return app
 }
