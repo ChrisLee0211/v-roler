@@ -5,7 +5,7 @@ interface Props {
     role:string
 }
 
-const rolerView:FunctionalComponent<Props> = (props,context) => {
+export const rolerView:FunctionalComponent<Props> = (props,context) => {
     let role = props.role;
     const isMatch = RoleCtr.match(role);
     if(isMatch){
@@ -13,8 +13,4 @@ const rolerView:FunctionalComponent<Props> = (props,context) => {
     }else{
         return h('')
     }
-}
-
-export default function createRolerView (role:string)  {
-    return h(rolerView,{role})
 }
