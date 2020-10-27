@@ -4,6 +4,7 @@
   "description": "a vue plugin about fine-grained access control",
   "main": "lib/bundle.esm.js",
   "module": "lib/bundle.esm.js",
+  "typings": "src/types/global.d.ts",
   "scripts": {
     "build": "rollup -c",
     "test": "jest --no-cache --coverage"

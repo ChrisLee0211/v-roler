@@ -3,7 +3,7 @@ import init from "./core/init";
 import {useRoler} from "./core/hook";
 import { PluginOpt } from "./types/global";
 
-var Vue:App;
+let Vue:App;
 
 
 /**

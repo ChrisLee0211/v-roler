@@ -5,7 +5,7 @@ import RoleCtr from "./instance";
 export const fnDirective:FunctionDirective<HTMLElement,string> = (el,binding) => {
     const targetByArg:string|undefined = binding.arg;
     const targetByVal:string = binding.value;
-    let role:string = targetByArg?targetByArg:targetByVal;
+    const role:string = targetByArg?targetByArg:targetByVal;
     if(RoleCtr.getRoles().value.length<=0) return
     if(RoleCtr.match(role)!==true){
         el.parentNode?.removeChild(el);  
@@ -14,6 +14,6 @@ export const fnDirective:FunctionDirective<HTMLElement,string> = (el,binding) =>
 }
 
 export const initDirective = (app:App,opts:PluginOpt):App => {
-    let command = opts.command??'can';
+    const command = opts.command??'can';
     return app.directive(`${command}`,fnDirective)
 }

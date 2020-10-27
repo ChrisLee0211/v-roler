@@ -24,6 +24,7 @@ const eslintrc = {
         eqeqeq:"error",
         "array-callback-return":"error",
         semi:"error",
+        "no-var":0
     }, // 自定义
 }
 

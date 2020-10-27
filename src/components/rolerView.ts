@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const rolerView:FunctionalComponent<Props> = (props,context) => {
-    let role = props.role;
+    const role = props.role;
     const isMatch = RoleCtr.match(role);
     if(isMatch){
         return h(context.slots)

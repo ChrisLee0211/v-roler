@@ -8,11 +8,11 @@ class RoleInstance implements RoleInstanceClass {
 
     constructor(list:string[]){
         this.init(list)
-    };
+    }
 
     init(param:string[]){
         if(isArray(param)){
-            let isString = param.every(v => typeof(v) === "string");
+            const isString = param.every(v => typeof(v) === "string");
             if(isString===false){
                 throw new Error(`the item in roles array expect type 'String'!`)
             }else{
@@ -44,9 +44,9 @@ class RoleInstance implements RoleInstanceClass {
     }
 
     match(role:string):boolean {
-        let isString: boolean = typeValidate(role,"string","the validate target");
+        const isString: boolean = typeValidate(role,"string","the validate target");
         if(!isString) return false
-        let result = this.roles.value.includes(role)
+        const result = this.roles.value.includes(role)
         return result
     }
 }

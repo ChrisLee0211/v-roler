@@ -24,7 +24,7 @@ export default {
     //   exclude:'node_modules/**'
     // })
   ],
-
+  external:['vue'],
   output: [
     {
       format: "es",
