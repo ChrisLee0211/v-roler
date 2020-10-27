@@ -18,6 +18,11 @@ export interface RoleInstanceClass {
      */
     init(roles:string[]):void,
     /**
+     * 动态添加角色权限
+     * @param role 角色数组或单一角色
+     */
+    addRole(role:string|string[]):Ref<string[]>
+    /**
      * 更新角色列表
      * @param roles 角色数组
      */
@@ -31,7 +36,7 @@ export interface RoleInstanceClass {
 
 class RoleInstance implements RoleInstanceClass {
     private roles:Ref<string[]> = [] as any;
-    private reset:(roles:string[])=>void = ()=>{};
+    private constantRoles:string[] = [];
 
     constructor(list:string[]){
         this.init(list)
@@ -43,7 +48,8 @@ class RoleInstance implements RoleInstanceClass {
             if(isString===false){
                 throw new Error(`the item in roles array expect type 'String'!`)
             }else{
-               [this.roles,this.reset] = useRoler(param)
+               this.constantRoles = [...param];
+               this.roles = ref(this.constantRoles);
             }
         }else{
             throw new Error(`please use a array as roles init option`)
@@ -54,8 +60,19 @@ class RoleInstance implements RoleInstanceClass {
         return this.roles
     }
 
+    addRole(role:string|string[]):Ref<string[]>{
+        if(typeof role === "string"){
+            this.roles.value.push(role)
+        }else{
+            const originRoles = this.roles.value.slice(0);
+            this.roles.value = [...originRoles,...role];
+
+        }
+        return this.roles
+    }
+
     update(param:string[]){
-        this.reset(param)
+        this.roles.value = [...this.constantRoles,...param];
     }
 
     match(role:string):boolean {
@@ -66,7 +83,6 @@ class RoleInstance implements RoleInstanceClass {
     }
 }
 
-var ins:RoleInstanceClass | null= null;
 
 /**
  * 单例模式构造类
@@ -76,7 +92,11 @@ var ins:RoleInstanceClass | null= null;
  */
 class RoleCtr implements RoleInstanceClass {
     public ins:RoleInstanceClass | null = null;
-
+ //
+ //
+ //
+ //
+ //这里还是需要改造成cl-flow那种先判断有没有生成实例的方式来代理
     init(roles:string[]){
         if(this.ins===null){
             this.ins = new RoleInstance(roles)
@@ -84,15 +104,19 @@ class RoleCtr implements RoleInstanceClass {
     }
 
     getRoles():Ref<string[]>{
-        return ins?.getRoles()??ref([])
+        return this.ins?.getRoles()??ref([])
     }
 
     update(roles:string[]){
-        ins?.update(roles)
+        this.ins?.update(roles)
+    }
+
+    addRole(role:string|string[]):Ref<string[]>{
+       return this.ins?.addRole(role)??ref([])
     }
 
     match(role:string):boolean{
-        return ins?.match(role)??false
+        return this.ins?.match(role)??false
     }
 }
 

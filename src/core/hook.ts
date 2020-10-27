@@ -5,13 +5,17 @@ type roles = Ref<string[]>
 type updateRolesFn = (roles)=>void
 type useRolerResult = [roles,updateRolesFn]
 
-export const useRoler = (roles?:string[]):useRolerResult => {
-    let currentRoles = roles?ref(roles):RoleCtr.getRoles();
+export function useRoler(roles?:string[]):useRolerResult{
+    let currentRoles:Ref<string[]>
+    if(roles){
+       currentRoles = RoleCtr.addRole(roles)
+    }else{
+        currentRoles = RoleCtr.getRoles()
+    }
 
-    const update = (newRoles) => {
-        if(roles){
-            currentRoles.value = newRoles
-        }
-    };
+    function update(roles){
+        RoleCtr.update(roles)
+    }
+
     return [currentRoles,update]
 }
