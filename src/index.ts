@@ -1,6 +1,7 @@
 import {App, Plugin} from "vue";
 import init from "./core/init";
-import {fnDirective} from "./core/directive";
+import {useRoler} from "./core/hook";
+import { PluginOpt } from "./types/global";
 
 var Vue:App;
 
@@ -18,9 +19,8 @@ export const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
         return
     }else{
         Vue = init(app,opts);
-        let command = opts.command??'can';
-        app.directive(`${command}`,fnDirective)
     }
 }
 
 export default RoleCtr
+export {useRoler}
