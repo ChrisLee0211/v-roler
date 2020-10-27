@@ -1,6 +1,6 @@
 import {App, Plugin} from "vue";
 import init from "./core/init";
-import {fnDirective} from "./core/diretive";
+import {fnDirective} from "./core/directive";
 
 var Vue:App;
 
