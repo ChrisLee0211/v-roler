@@ -1,16 +1,16 @@
-import { FunctionalComponent,h } from "vue";
+import { FunctionalComponent,h,defineComponent, toRefs, VNode, isRef } from "vue";
 import RoleCtr from "../core/instance";
 
 interface Props {
     role:string
 }
 
-export const rolerView:FunctionalComponent<Props> = (props,context) => {
+export const rolerView:FunctionalComponent<Props> = (props,{slots}) => {
     const role = props.role;
     const isMatch = RoleCtr.match(role);
     if(isMatch){
-        return h(context.slots)
+        return slots.default?slots.default():null
     }else{
-        return h('')
+        return null
     }
 }
