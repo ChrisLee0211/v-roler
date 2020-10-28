@@ -13,7 +13,7 @@ let Vue:App;
  * @author chrislee
  * @Time 2020/10/24
  */
-export const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
+const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
     if(Vue&&Vue === app){
         console.error(`[v-roler] already installed. app.use(vRoler) should be called only once in each app`);
         return
@@ -22,5 +22,5 @@ export const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
     }
 }
 
-export default RoleCtr
+export default vRolerPlugin
 export {useRoler}
