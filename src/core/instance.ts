@@ -1,5 +1,5 @@
 import { RoleInstanceClass } from "src/types/global";
-import {reactive, Ref, ref, watch} from "vue";
+import {reactive, ReactiveEffect, Ref, ref, watch} from "vue";
 import {isArray,typeValidate} from "../utils";
 
 class RoleInstance implements RoleInstanceClass {
@@ -7,7 +7,7 @@ class RoleInstance implements RoleInstanceClass {
         extra:[],
         constant:[]
     })
-    private updateMaps:WeakMap<HTMLElement,Function> = new WeakMap()
+    private updateMaps:Map<HTMLElement,ReactiveEffect> = new Map()
     constructor(list:string[]){
         this.init(list)
     }
@@ -21,7 +21,13 @@ class RoleInstance implements RoleInstanceClass {
                this.roles.constant = [...param];
                this.roles.extra = [...param];
                watch(this.roles.extra,()=>{
-                   console.log("roles update")
+                   this.updateMaps.forEach((fn)=>{
+                       try{
+                           fn()
+                       }catch(e){
+                           console.error(e)
+                       }
+                   })
                })
             }
         }else{
@@ -31,6 +37,17 @@ class RoleInstance implements RoleInstanceClass {
 
     getRoles():string[]{
         return this.roles.extra
+    }
+
+    registerUpdateFn(dom:HTMLElement,fn:ReactiveEffect){
+        if(this.updateMaps.has(dom)) return
+        this.updateMaps.set(dom,fn)
+    }
+
+    unregisterUpdateFn(dom){
+        if(this.updateMaps.has(dom)){
+            this.updateMaps.delete(dom)
+        }
     }
 
     addRole(role:string|string[]):string[]{
@@ -83,6 +100,14 @@ class RoleCtr implements RoleInstanceClass {
 
     addRole(role:string|string[]):string[]{
        return this.getInstance().addRole(role)
+    }
+
+    registerUpdateFn(dom:HTMLElement,fn:ReactiveEffect){
+        this.getInstance().registerUpdateFn(dom,fn)
+    }
+
+    unregisterUpdateFn(dom:HTMLElement){
+        this.getInstance().unregisterUpdateFn(dom)
     }
 
     match(role:string):boolean{

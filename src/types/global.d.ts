@@ -24,6 +24,17 @@ export interface RoleInstanceClass {
      */
     addRole(role:string|string[]):string[]
     /**
+     * 注册更新行为
+     * @param dom 指令绑定的元素
+     * @param fn 更新方法
+     */
+    registerUpdateFn(dom:HTMLElement,fn:Function):void
+    /**
+     * 注销更新行为
+     * @param dom 指令绑定的元素
+     */
+    unregisterUpdateFn(dom:HTMLElement)
+    /**
      * 更新角色列表
      * @param roles 角色数组
      */
