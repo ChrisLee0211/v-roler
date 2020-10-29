@@ -1,12 +1,12 @@
 import {Ref, ref} from "vue";
 import RoleCtr from "./instance";
 
-type roles = Ref<string[]>
-type updateRolesFn = (roles)=>void
+type roles = string[]
+type updateRolesFn = (roles:string[])=>void
 type useRolerResult = [roles,updateRolesFn]
 
-export function useRoler(roles?:string[]):useRolerResult{
-    let currentRoles:Ref<string[]>
+export function useRoler(roles?:string[]):[roles,updateRolesFn]{
+    let currentRoles:string[]
     if(roles){
        currentRoles = RoleCtr.addRole(roles)
     }else{

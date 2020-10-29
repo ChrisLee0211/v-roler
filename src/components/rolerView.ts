@@ -7,9 +7,9 @@ interface Props {
 
 export const rolerView:FunctionalComponent<Props> = (props,{slots}) => {
     const role = props.role;
-    const isMatch = RoleCtr.match(role);
-    if(isMatch){
-        return slots.default?slots.default():null
+    const isMatch = (role && RoleCtr.match(role))??false;
+    if(isMatch&&slots.default){
+        return slots.default
     }else{
         return null
     }

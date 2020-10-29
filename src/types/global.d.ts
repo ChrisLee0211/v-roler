@@ -1,5 +1,3 @@
-import { Ref } from "_vue@3.0.2@vue";
-
 export interface PluginOpt {
     roles:string[],
     command?:string
@@ -14,7 +12,7 @@ export interface RoleInstanceClass {
     /**
      * 获取当前已初始化的角色列表
      */
-    getRoles():Ref<string[]>,
+    getRoles():string[],
     /**
      * 初始化操作
      * @param roles 角色数组
@@ -24,7 +22,7 @@ export interface RoleInstanceClass {
      * 动态添加角色权限
      * @param role 角色数组或单一角色
      */
-    addRole(role:string|string[]):Ref<string[]>
+    addRole(role:string|string[]):string[]
     /**
      * 更新角色列表
      * @param roles 角色数组
