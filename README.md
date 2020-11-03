@@ -37,4 +37,15 @@ createApp(App)
 </Parent>
 
 ```
-显示的结果是，ChildA被渲染，ChildB被删除，原因是在初始化插件vRoler时，ChildA指令传入的`view`权限已经被声明在权限数组中，所以会正常渲染，但是ChildB的指令传入的`create`并不在初始化的权限数组中，因此会被移除，除非它改为`add`
+显示的结果是，ChildA被渲染，ChildB被删除，原因是在初始化插件vRoler时，ChildA指令传入的`"view"`权限已经被声明在权限数组中，所以会正常渲染，但是ChildB的指令传入的`"create"`并不在初始化的权限数组中.
+> 提示：指令中支持v-xx:view或者:v-xx="'view'"的方式。
+### 2、使用`roler-view`组件
+v-roler在全局注册了`roler-view`组件，你可以将任何需要做权限控制的元素或内容用`roler-view`来包裹着，`roler-view`本身只接收一个熟悉`role`，其作用和指令一致。
+```html
+<roler-view role="view">
+    查看权限
+        <roler-view role="edit">编辑权限</roler-view>
+        <roler-view role="delete">删除权限</roler-view>
+</roler-view>
+```
+视图只会渲染查看权限和删除权限，因为在插件初始化时并没有声明`edit`的权限路由。
