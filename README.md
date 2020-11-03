@@ -18,7 +18,11 @@ import vRoler from "v-roler";
 import App from './App.vue';
 
 createApp(App)
-.use(vRoler({roles:["view","add","delete"],command:"can"}))
+.use(vRoler({
+    //权限路由，如果没有声明在roles数组里，那么在组件中使用权限指令的元素将被移除
+    roles:["view","add","delete"],
+    //希望使用的自定义指令，如command:"test",那么在组件中就需要使用v-test作为指令控制权限
+    command:"can"}))
 .mount('#app');
 
 ```
@@ -49,3 +53,8 @@ v-roler在全局注册了`roler-view`组件，你可以将任何需要做权限�
 </roler-view>
 ```
 视图只会渲染查看权限和删除权限，因为在插件初始化时并没有声明`edit`的权限路由。
+### 3、使用`Composition Api`更改权限
+`v-roler`允许用户在`setup`中更改权限数组（也就是插件初始化时传入的`roles`选项），这是每个组件渲染前最后一次更改权限的机会。
+```typescript
+
+```
