@@ -1,6 +1,7 @@
 import {App, Plugin} from "vue";
 import init from "./core/init";
-import {useRoler} from "./core/hook";
+import RoleCtr from "./core/instance";
+export {useRoler} from "./core/hook";
 import { PluginOpt } from "./types/global";
 
 let Vue:App;
@@ -22,5 +23,18 @@ const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
     }
 }
 
+/**
+ * 更新全局权限列表
+ * @param roles 权限列表
+ * @author chrislee
+ * @Time 2020/11/4
+ */
+export const updateRoles = (roles:string[]):void => {
+    try{
+        RoleCtr.update(roles)
+    }catch(e){
+        console.error(e)
+    }
+}
+
 export default vRolerPlugin
-export {useRoler}
