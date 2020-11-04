@@ -54,7 +54,21 @@ v-roler在全局注册了`roler-view`组件，你可以将任何需要做权限�
 ```
 视图只会渲染查看权限和删除权限，因为在插件初始化时并没有声明`edit`的权限路由。
 ### 3、使用`Composition Api`更改权限
-`v-roler`允许用户在`setup`中更改权限数组（也就是插件初始化时传入的`roles`选项），这是每个组件渲染前最后一次更改权限的机会。
+`v-roler`允许用户在`setup`中通过`useRoler`这个hook来更改权限数组（也就是插件初始化时传入的`roles`选项），这是每个组件渲染前最后一次更改权限的机会。同时useRoler返回的权限列表是个reactive对象，能够精细地触发对应的`roler-view`组件更新自身显示状态（这也是使用组件和指令的区别）。
 ```typescript
+import {useRoler} from "v-roler";
 
+export default {
+    name:"componentA",
+    props:{},
+    ...,
+    setup(){
+        const [roles,resetRoles] = useRoler();
+        roles.push("xxx");
+        roles.pop();
+        return {roles}
+    }
+}
 ```
+
+## 四、API参考
