@@ -1,4 +1,4 @@
-import {App, Plugin} from "vue";
+import {App, h, Plugin} from "vue";
 import init from "./core/init";
 import RoleCtr from "./core/instance";
 export {useRoler} from "./core/hook";
@@ -35,6 +35,22 @@ export const updateRoles = (roles:string[]):void => {
     }catch(e){
         console.error(e)
     }
+}
+
+/**
+ * 获取当前实例生效的权限列表
+ * @returns {string[]} roles
+ * @author chrislee
+ * @Time 2020/11/8
+ */
+export const getRoles = ():string[] => {
+    let result:string[] = [];
+    try{
+        result = RoleCtr.getRoles();
+    }catch(e){
+        console.error(e)
+    };
+    return result
 }
 
 export default vRolerPlugin
