@@ -26,6 +26,7 @@ createApp(App)
 .mount('#app');
 
 ```
+如上所示，下面所有的使用示例都默认初始化时只声明了`"view","add","delete"`三个权限。
 
 ## 三、使用
 ### 1、使用指令控制权限（推荐）
@@ -70,5 +71,36 @@ export default {
     }
 }
 ```
+
+### 4、配合`vue-router`路由守卫使用
+如果希望在进入新页面之前就确定好那些元素需要被屏蔽，`v-roler`本身提供了两个API用以随时获取当前可用的权限和更新权限，配合`vue-router`的路由守卫可以实现页面组件初始化前更新权限列表，保证在页面渲染时已经去屏蔽掉了无权限的元素。
+```javascript
+import {updateRoles,getRoles} from "v-roler";
+import VueRouter from "vue-router";
+
+const routes = [
+  { path: '/',name:'home', component: Home },
+]
+const router = VueRouter.createRouter({
+    history:VueRouter.createWebHashHistory(),
+    routes
+})
+
+router.beforeEach((to, from, next) => {
+    // 获取当前v-roler中储存的所有权限
+  const allRoles = getRoles();
+  // 如果存在view权限，则用新的权限数组["add","delete","edit"]去更新v-roler的权限
+  // 注意，updateRoles方法并不会删除初始化时声明的权限，只会更新后续通过其他方法新增的权限
+  if(allRoles.includes("view")){
+      updateRoles(["add","delete","edit"])
+      // 更新完权限后再进入该页面
+      next()
+  }else{
+      next({name:"home"})
+  }
+})
+
+```
+
 
 ## 四、API参考
