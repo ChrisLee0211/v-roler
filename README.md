@@ -54,7 +54,7 @@ v-roler在全局注册了`roler-view`组件，你可以将任何需要做权限�
 </roler-view>
 ```
 视图只会渲染查看权限和删除权限，因为在插件初始化时并没有声明`edit`的权限路由。
-### 3、使用`Composition Api`更改权限
+### 3、使用hook更改权限
 `v-roler`允许用户在`setup`中通过`useRoler`这个hook来更改权限数组（也就是插件初始化时传入的`roles`选项），这是每个组件渲染前最后一次更改权限的机会。同时useRoler返回的权限列表是个reactive对象，能够精细地触发对应的`roler-view`组件更新自身显示状态（这也是使用组件和指令的区别）。
 ```typescript
 import {useRoler} from "v-roler";
@@ -104,3 +104,21 @@ router.beforeEach((to, from, next) => {
 
 
 ## 四、API参考
+### 插件选项(Plugin Options)
+
+|  name   | type  | required  |  description  |
+|  ----  | ----  |----  |----  |
+| roles  | Array<string> | yes | 初始化时作为基础的权限路由，如["musice-add","music-edit"]
+| directive  | string | no |用户自定义的指令，如果不传，则默认使用`v-can`作为指令
+
+示例：参考使用方法中的[安装插件](##二、安装插件)
+<br>
+### 全局API(Global API)
+|  name   | param  | return  | required  |  description  |
+|  ----  | ----  |----  |----  |----  |
+|  useRoler  | string[]  | [roles,resetRolesFunction]  | 参数非必须 | 当传入一个数组时，相当于在插件初始化时的数组基础上，新增权限列表。返回值是一个数组，第一个元素是当前可用的所有权限列表，第二个是重置当前权限列表的方法，参数是一个权限数组，示例参考[使用hook更改权限](###3、使用hook更改权限)
+|  getRoles  | /  | string[]  | / | 返回当前最新的所有权限，返回类型是一个数组
+|  updateRoles  | string[]  | void | yse  | 用传入的数组来重置更新当前的所有权限
+
+<vr>
+> 注意：插件安装时初始化传入的权限数组是固定无法重置的，无论是hook还是updateRoles等方式都智能在初始权限的基础上累加或修改权限列表
