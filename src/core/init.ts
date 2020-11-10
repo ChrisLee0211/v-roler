@@ -17,7 +17,7 @@ export default function initVRoler(app:App,opts:PluginOpt):App {
     initMixin(app);
     initDirective(app,opts);
     registerComponent(app);
-    return app
+    return app;
 }
 
 /**
@@ -27,5 +27,5 @@ export default function initVRoler(app:App,opts:PluginOpt):App {
  * @Time 2020/10/27
  */
 function registerComponent(app:App){
-    app.component("roler-view",rolerView)
+    app.component("roler-view",rolerView);
 }

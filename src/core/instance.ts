@@ -9,56 +9,56 @@ class RoleInstance implements RoleInstanceClass {
     })
     private updateMaps:Map<HTMLElement,ReactiveEffect> = new Map()
     constructor(list:string[]){
-        this.init(list)
+        this.init(list);
     }
 
     init(param:string[]){
         if(isArray(param)){
             const isString = param.every(v => typeof(v) === "string");
             if(isString===false){
-                throw new Error(`the item in roles array expect type 'String'!`)
+                throw new Error(`the item in roles array expect type 'String'!`);
             }else{
                this.roles.constant = [...param];
                this.roles.extra = [...param];
                watch(this.roles.extra,()=>{
                    this.updateMaps.forEach((fn)=>{
                        try{
-                           fn()
+                           fn();
                        }catch(e){
-                           console.error(e)
+                           console.error(e);
                        }
-                   })
-               })
+                   });
+               });
             }
         }else{
-            throw new Error(`please use a array as roles init option`)
+            throw new Error(`please use a array as roles init option`);
         }
     }
 
     getRoles():string[]{
-        return this.roles.extra
+        return this.roles.extra;
     }
 
     registerUpdateFn(dom:HTMLElement,fn:ReactiveEffect){
-        if(this.updateMaps.has(dom)) return
-        this.updateMaps.set(dom,fn)
+        if(this.updateMaps.has(dom)) return;
+        this.updateMaps.set(dom,fn);
     }
 
     unregisterUpdateFn(dom){
         if(this.updateMaps.has(dom)){
-            this.updateMaps.delete(dom)
+            this.updateMaps.delete(dom);
         }
     }
 
     addRole(role:string|string[]):string[]{
         if(typeof role === "string"){
-            this.roles.extra.push(role)
+            this.roles.extra.push(role);
         }else{
             // const originRoles = [...this.roles.extra];
-            this.roles.extra = this.roles.extra.concat(role)
+            this.roles.extra = this.roles.extra.concat(role);
 
         }
-        return this.roles.extra
+        return this.roles.extra;
     }
 
     update(param:string[]){
@@ -68,9 +68,9 @@ class RoleInstance implements RoleInstanceClass {
 
     match(role:string):boolean {
         const isString: boolean = typeValidate(role,"string","the validate target");
-        if(!isString) return false
-        const result = this.roles.extra.includes(role)
-        return result
+        if(!isString) return false;
+        const result = this.roles.extra.includes(role);
+        return result;
     }
 }
 
@@ -91,36 +91,36 @@ class RoleCtr implements RoleInstanceClass {
     }
 
     getRoles():string[]{
-        return this.getInstance().getRoles()
+        return this.getInstance().getRoles();
     }
 
     update(roles:string[]){
-        this.getInstance().update(roles)
+        this.getInstance().update(roles);
     }
 
     addRole(role:string|string[]):string[]{
-       return this.getInstance().addRole(role)
+       return this.getInstance().addRole(role);
     }
 
     registerUpdateFn(dom:HTMLElement,fn:ReactiveEffect){
-        this.getInstance().registerUpdateFn(dom,fn)
+        this.getInstance().registerUpdateFn(dom,fn);
     }
 
     unregisterUpdateFn(dom:HTMLElement){
-        this.getInstance().unregisterUpdateFn(dom)
+        this.getInstance().unregisterUpdateFn(dom);
     }
 
     match(role:string):boolean{
-        return this.getInstance().match(role)
+        return this.getInstance().match(role);
     }
 
     getInstance():RoleInstanceClass{
         if(this.ins!==null){
-            return this.ins
+            return this.ins;
         }else{
-            throw new Error(`Fail to create the [v-roler] instance, please check the plugin if is installed `)
+            throw new Error(`Fail to create the [v-roler] instance, please check the plugin if is installed `);
         }
     }
 }
 
-export default new RoleCtr()
+export default new RoleCtr();

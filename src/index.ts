@@ -17,11 +17,11 @@ let Vue:App;
 const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
     if(Vue&&Vue === app){
         console.error(`[v-roler] already installed. app.use(vRoler) should be called only once in each app`);
-        return
+        return;
     }else{
         Vue = init(app,opts);
     }
-}
+};
 
 /**
  * 更新全局权限列表
@@ -31,11 +31,11 @@ const vRolerPlugin: Plugin = (app,opts:PluginOpt):void => {
  */
 export const updateRoles = (roles:string[]):void => {
     try{
-        RoleCtr.update(roles)
+        RoleCtr.update(roles);
     }catch(e){
-        console.error(e)
+        console.error(e);
     }
-}
+};
 
 /**
  * 获取当前实例生效的权限列表
@@ -48,9 +48,9 @@ export const getRoles = ():string[] => {
     try{
         result = RoleCtr.getRoles();
     }catch(e){
-        console.error(e)
-    };
-    return result
-}
+        console.error(e);
+    }
+    return result;
+};
 
-export default vRolerPlugin
+export default vRolerPlugin;

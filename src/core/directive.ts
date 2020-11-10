@@ -6,13 +6,13 @@ const fnUpdate:FunctionDirective<HTMLElement,string> = (el,binding,vnode) => {
     const targetByArg:string|undefined = binding.arg;
     const targetByVal:string = binding.value;
     const role:string = targetByArg?targetByArg:targetByVal;
-    if(RoleCtr.getRoles().length<=0) return
+    if(RoleCtr.getRoles().length<=0) return;
     // if(binding.instance){
     //     const dom = el;
     //     RoleCtr.registerUpdateFn(dom,binding.instance.$forceUpdate);
     // }
     if(RoleCtr.match(role)!==true){
-        el.parentNode?.removeChild(el)
+        el.parentNode?.removeChild(el);
     }
     // if(RoleCtr.match(role)!==true){
     //     el.setAttribute("style","display:none")
@@ -20,13 +20,13 @@ const fnUpdate:FunctionDirective<HTMLElement,string> = (el,binding,vnode) => {
     // }else{
     //     el.setAttribute("style","display:auto")
     // }
-    return
-}
+    return;
+};
 
 const fnDestory:FunctionDirective<HTMLElement,string> = (el,binding) => {
     RoleCtr.unregisterUpdateFn(el);
-    return
-}
+    return;
+};
 
 export const initDirective = (app:App,opts:PluginOpt):App => {
     const command = opts.command??'can';
@@ -35,5 +35,5 @@ export const initDirective = (app:App,opts:PluginOpt):App => {
         updated:fnUpdate,
         unmounted:fnDestory
         
-    })
-}
+    });
+};

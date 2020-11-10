@@ -8,8 +8,8 @@ export const initMixin = (app:App):App => {
     app.mixin({data(){
         return {
             $$roles:RoleCtr.getRoles()
-        }
-    }})
+        };
+    }});
 
-    return app
-}
+    return app;
+};

@@ -7,6 +7,7 @@
   "typings": "src/types/global.d.ts",
   "scripts": {
     "build": "rollup -c",
+    "fix": "eslint . --fix",
     "test": "jest --no-cache --coverage"
   },
   "repository": {
