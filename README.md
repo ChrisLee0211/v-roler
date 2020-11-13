@@ -111,12 +111,12 @@ router.beforeEach((to, from, next) => {
 | roles  | Array<string> | yes | 初始化时作为基础的权限路由，如["musice-add","music-edit"]
 | directive  | string | no |用户自定义的指令，如果不传，则默认使用`v-can`作为指令
 
-示例：参考使用方法中的[安装插件](##二、安装插件)
+示例：参考使用方法中的[安装插件](#二安装插件)
 <br>
 ### 全局API(Global API)
 |  name   | param  | return  | required  |  description  |
 |  ----  | ----  |----  |----  |----  |
-|  useRoler  | string[]  | [roles,resetRolesFunction]  | 参数非必须 | 当传入一个数组时，相当于在插件初始化时的数组基础上，新增权限列表。返回值是一个数组，第一个元素是当前可用的所有权限列表，第二个是重置当前权限列表的方法，参数是一个权限数组，示例参考[使用hook更改权限](###3、使用hook更改权限)
+|  useRoler  | string[]  | [roles,resetRolesFunction]  | 参数非必须 | 当传入一个数组时，相当于在插件初始化时的数组基础上，新增权限列表。返回值是一个数组，第一个元素是当前可用的所有权限列表，第二个是重置当前权限列表的方法，参数是一个权限数组，示例参考[使用hook更改权限](#3使用hook更改权限)
 |  getRoles  | /  | string[]  | / | 返回当前最新的所有权限，返回类型是一个数组
 |  updateRoles  | string[]  | void | yse  | 用传入的数组来重置更新当前的所有权限
 
